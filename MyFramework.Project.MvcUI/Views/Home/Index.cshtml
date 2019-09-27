@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MyFramework.Project.Entities.Concrete.Haber>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Haberler</h2>
+    <hr />
+
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="~/CmsFiles/@item.Resim" class="img-fluid" alt="Responsive image">
+                    </div>
+                    <div class="col-md-7">
+                        <p>
+                            @*<a href="/haber/@MyFramework.Project.MvcUI.Utilities.NameHelper.Helper(item.Baslik)">@item.Baslik</a>*@
+                            <form action="/haber/@MyFramework.Project.MvcUI.Utilities.NameHelper.Helper(item.Baslik)" method="post">
+                                <input type="text" hidden name="id" value="@item.Id" />
+                                <button class="btn btn-primary" type="submit">@item.Baslik</button>
+                            </form>
+                        </p>
+                        <p>@item.Detay</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="border border-danger" />
+    }
+
+    <nav aria-label="...">
+        <ul class="pagination pagination-lg">
+            @for (int i = 1; i <= (int)TempData["sayfaSayisi"]; i++)
+            {
+
+                <li class="page-item"><a class="page-link" href="?page=@i">@i</a></li>
+            }
+        </ul>
+    </nav>
+</div>
+
+

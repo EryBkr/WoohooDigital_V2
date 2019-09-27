@@ -1,0 +1,53 @@
+﻿@model MyFramework.Project.Entities.Concrete.Haber
+@{
+    ViewBag.Title = "HaberAdd";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Haber Güncelle</h2>
+
+            <form action="/Admin/HaberUpdate" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                
+                    <input hidden type="text" name="Id" value="@Model.Id" />
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Haber Başlığı</label>
+                        @Html.TextBoxFor(model => model.Baslik, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Baslik, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Haber Detayı</label>
+                        @Html.TextAreaFor(model => model.Detay, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Detay, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Haber Resmi</label>
+                        @Html.TextBox("file", "", new { type = "file", @class = "form-control-file", id = "myFile" })
+                        @Html.ValidationMessageFor(model => model.Resim, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                       
+                            <label for="disabledTextInput">Mevcut Resim</label>
+                            <input type="text" hidden value="@Model.Resim" name="Resim" @*id="myFileName"*@ id="disabledTextInput" class="form-control">
+                            <input disabled type="text"  value="@Model.Resim"  @*id="myFileName"*@ id="disabledTextInput" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Sıra No</label>
+                        @Html.TextBoxFor(model => model.SiraNo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SiraNo, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" name="Aktiflik" value="true" @(Model.Aktiflik == true ? "checked" : "") class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Aktiflik Durumu</label>
+                    </div>
+                    <button type="submit" class="btn btn-success">Güncelle</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+

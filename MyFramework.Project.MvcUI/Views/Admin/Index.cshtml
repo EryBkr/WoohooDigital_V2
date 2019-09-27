@@ -1,0 +1,87 @@
+﻿@model IEnumerable<MyFramework.Project.Entities.Concrete.Haber>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h2>Haber Admin Paneli</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Başlık</th>
+                        <th scope="col">Resim</th>
+                        <th scope="col">Sıra No</th>
+                        <th scope="col">Aktiflik</th>
+                        <th scope="col">İşlem Zamanı</th>
+                        <th scope="col"></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <a href="/Admin/HaberAdd" class="btn btn-success mb-5">Haber Ekle</a>
+                    <a href="/Account/LogOut" class="btn btn-warning mb-5 ml-5">Çıkış Yap</a>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td> <a href="/Admin/HaberUpdate/@item.Id">@item.Baslik</a></td>
+                            <td><img src="~/CmsFiles/@item.Resim" height="100" width="100" class="img-thumbnail img-fluid"></td>
+                            <td><input class="siraNo" id="@item.Id" type="text" style="width:60px;"  value="@item.SiraNo" /></td>
+                            <td>
+                                @if (item.Aktiflik)
+                                {
+                                    <button id="@item.Id" class="btn btn-success aktiflik">Aktif</button>
+
+                                }
+                                else
+                                {
+                                    <button id="@item.Id" class="btn btn-danger aktiflik">Pasif</button>
+                                }
+                            </td>
+                            <td class="time@(item.Id)">@item.IslemZamani</td>
+                            <td>
+                              
+                                <button id="myButton" type="button" class="btn btn-danger" data-toggle="modal" data-target="@item.Id">
+                                    Sil
+                                </button>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">SİL</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Silmek İstediğinize Emin Misiniz ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                            <a href="" class="btn btn-danger" id="myButtonDelete">Sil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav aria-label="...">
+                <ul class="pagination pagination-lg">
+                    @for (int i = 1; i <= (int)TempData["sayfaSayisi"]; i++)
+                    {
+
+                        <li class="page-item"><a class="page-link" href="/Admin/Index?page=@i">@i</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
